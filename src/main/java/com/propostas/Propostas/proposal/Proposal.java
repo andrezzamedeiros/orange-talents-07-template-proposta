@@ -52,4 +52,8 @@ public class Proposal {
     public BigDecimal getSalary() {
         return salary;
     }
+
+    public String getDocument() {
+        return document;
+    }
 }
