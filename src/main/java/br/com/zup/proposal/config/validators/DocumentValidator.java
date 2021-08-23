@@ -1,4 +1,4 @@
-package com.propostas.Propostas.proposal;
+package br.com.zup.proposal.config.validators;
 
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CNPJValidator;
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
@@ -24,6 +24,5 @@ public class DocumentValidator implements ConstraintValidator<Document,CharSeque
         return cnpjValidator.isValid(value, context)
                 || cpfValidator.isValid(value, context);
     }
-
 }
 

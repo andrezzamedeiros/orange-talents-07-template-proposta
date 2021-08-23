@@ -1,4 +1,4 @@
-package com.propostas.Propostas.proposal;
+package br.com.zup.proposal.proposal;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

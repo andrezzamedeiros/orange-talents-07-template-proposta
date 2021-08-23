@@ -1,4 +1,4 @@
-package com.propostas.Propostas.proposal;
+package br.com.zup.proposal.proposal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.Locale;
 
 @Entity
 public class Proposal {
@@ -20,6 +21,7 @@ public class Proposal {
     private @NotBlank String address;
     private @Positive BigDecimal salary;
     private @NotBlank String document;
+    private ProposalStatus proposalStatus;
 
     @Deprecated
     public Proposal() {
@@ -55,5 +57,21 @@ public class Proposal {
 
     public String getDocument() {
         return document;
+    }
+
+    public ProposalStatus getProposalStatus() {
+        return proposalStatus;
+    }
+
+    public void setProposalStatus(ProposalStatus proposalStatus) {
+        this.proposalStatus = proposalStatus;
+    }
+
+    public void setProposalStatus(String resultadoSolicitacao) {
+        if (resultadoSolicitacao.equalsIgnoreCase("COM_RESTRICAO ")) {
+            this.proposalStatus = ProposalStatus.valueOf("NAO_ELEGIVEL");
+        } else {
+            this.proposalStatus = ProposalStatus.valueOf("ELEGIVEL");
+        }
     }
 }
