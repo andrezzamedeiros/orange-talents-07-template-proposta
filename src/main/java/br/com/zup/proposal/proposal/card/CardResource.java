@@ -26,7 +26,7 @@ public class CardResource {
     @Scheduled(fixedDelayString = "${periodicidade.executa-operacao}")
     public void AssociateCard() {
 
-        List<Proposal> avaliablesCard = repository.findAllByCardIdIsNullProposalStatusEquals(ProposalStatus.ELEGIVEL);
+        List<Proposal> avaliablesCard = repository.findAllByCardIsNullAndProposalStatusEquals(ProposalStatus.ELEGIVEL);
         if (!avaliablesCard.isEmpty()) {
             avaliablesCard.forEach(proposal -> {
                 CardRequest

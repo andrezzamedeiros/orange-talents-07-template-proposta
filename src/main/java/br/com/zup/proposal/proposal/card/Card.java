@@ -7,11 +7,16 @@ public class Card {
 
     @Id
     private String id;
-    private String cardNumber;
 
+    @Deprecated
     public Card() {
     }
+
     public Card(String id) {
         this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 }

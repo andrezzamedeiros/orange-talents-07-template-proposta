@@ -47,6 +47,16 @@ public class Proposal {
         this.proposalStatus = proposalStatus;
     }
 
+    public Proposal(String email, String name, String address, BigDecimal salary, String document, ProposalStatus proposalStatus, Card card) {
+        this.email = email;
+        this.name = name;
+        this.address = address;
+        this.salary = salary;
+        this.document = document;
+        this.proposalStatus = proposalStatus;
+        this.card = card;
+    }
+
     public Long getId() {
         return id;
     }

@@ -12,5 +12,5 @@ public interface ProposalRepository extends JpaRepository<Proposal, Long> {
 
     Optional<Proposal> findByDocument(String document);
 
-   List<Proposal> findAllByCardIdIsNullProposalStatusEquals(ProposalStatus status);
+   List<Proposal> findAllByCardIsNullAndProposalStatusEquals(ProposalStatus status);
 }

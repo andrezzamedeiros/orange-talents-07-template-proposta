@@ -7,15 +7,13 @@ import br.com.zup.proposal.proposal.analisysRequester.RequesterResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProposalController {
@@ -25,7 +23,7 @@ public class ProposalController {
     @Autowired
     RequesterResource requesterResource;
 
-    @PostMapping("/proposal")
+    @PostMapping("/api/proposal")
     public ResponseEntity<?> createProposal(@RequestBody @Valid ProposalRequest proposalRequest, UriComponentsBuilder builder) throws Exception {
 
         Proposal proposal = proposalRequest.toModel();
@@ -44,9 +42,18 @@ public class ProposalController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/proposal")
+    @GetMapping("/api/proposal")
     public ResponseEntity<?> getAll(){
         List<Proposal> proposals = proposalRepository.findAll();
         return ResponseEntity.ok(proposals);
+    }
+
+    @GetMapping("api/proposal/{idProposal}/details")
+    public ResponseEntity<ProposalResponse>detailProposal(@PathVariable Long idProposal){
+        Optional<Proposal> proposal = proposalRepository.findById(idProposal);
+        if(!proposal.isPresent()){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new ProposalResponse(proposal.get()));
     }
 }
