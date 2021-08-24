@@ -17,6 +17,7 @@ public class ProposalRequest {
     private @NotBlank @Document
     String document;
 
+
     public String getEmail() {
         return email;
     }

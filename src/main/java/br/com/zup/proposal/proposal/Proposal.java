@@ -1,9 +1,8 @@
 package br.com.zup.proposal.proposal;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import br.com.zup.proposal.proposal.card.Card;
+
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -22,17 +21,30 @@ public class Proposal {
     private @Positive BigDecimal salary;
     private @NotBlank String document;
     private ProposalStatus proposalStatus;
+    @OneToOne( cascade = CascadeType.ALL )
+    @JoinColumn( name = "card_id", unique = true )
+    private Card card;
 
     @Deprecated
     public Proposal() {
     }
 
     public Proposal(String email, String name, String address, BigDecimal salary, String document) {
+        this.id = id;
         this.email = email;
         this.name = name;
         this.address = address;
         this.salary = salary;
         this.document = document;
+    }
+
+    public Proposal(String email, String name, String address, BigDecimal salary, String document, ProposalStatus proposalStatus) {
+        this.email = email;
+        this.name = name;
+        this.address = address;
+        this.salary = salary;
+        this.document = document;
+        this.proposalStatus = proposalStatus;
     }
 
     public Long getId() {
@@ -59,6 +71,10 @@ public class Proposal {
         return document;
     }
 
+    public Card getCard() {
+        return card;
+    }
+
     public ProposalStatus getProposalStatus() {
         return proposalStatus;
     }
@@ -67,11 +83,17 @@ public class Proposal {
         this.proposalStatus = proposalStatus;
     }
 
+
+
     public void setProposalStatus(String resultadoSolicitacao) {
         if (resultadoSolicitacao.equalsIgnoreCase("COM_RESTRICAO ")) {
             this.proposalStatus = ProposalStatus.valueOf("NAO_ELEGIVEL");
         } else {
             this.proposalStatus = ProposalStatus.valueOf("ELEGIVEL");
         }
+    }
+
+    public void setCard ( Card card ) {
+        this.card = card;
     }
 }
