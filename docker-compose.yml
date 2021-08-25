@@ -29,9 +29,21 @@ services:
     ports:
       - 5433:5432 # porta_maquia_host:porta_do_container_do_docker
     environment:
-      POSTGRES_USER: propostas
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: propostas
+
+  proposta-webservice:
+    container_name: api
+    build: ./
+    ports:
+      - 8081:8080
+    environment:
+      URL_DATABASE: jdbc:postgresql://postgres-propostas:5433/propostas
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+    depends_on:
+      - postgres-propostas
 
   postgres:
     image: 'postgres:9.6-alpine'
