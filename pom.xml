@@ -8,13 +8,8 @@
 		<version>2.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-<<<<<<< HEAD
 	<groupId>com.propostas</groupId>
 	<artifactId>Propostas</artifactId>
-=======
-	<groupId>br.com.zup.proposal</groupId>
-	<artifactId>Proposal</artifactId>
->>>>>>> bce5995103e70a58df6f0432b6174eccaed2715f
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Propostas</name>
 	<description>Demo project for Spring Boot</description>
@@ -30,6 +25,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
@@ -40,15 +46,12 @@
 		</dependency>
 
 		<dependency>
-<<<<<<< HEAD
-=======
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 			<version>3.0.3</version>
 		</dependency>
 
 		<dependency>
->>>>>>> bce5995103e70a58df6f0432b6174eccaed2715f
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
@@ -58,29 +61,15 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<<<<<<< HEAD
-=======
 
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-actuator</artifactId>
 			</dependency>
-
->>>>>>> bce5995103e70a58df6f0432b6174eccaed2715f
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>
