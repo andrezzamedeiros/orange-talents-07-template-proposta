@@ -98,16 +98,21 @@ public class CardController {
         String ipClient = httpServletRequest.getRemoteAddr();
 
         Optional<Card> optionalCard = repository.findById(cardId);
+        Card card = optionalCard.get();
         if (!optionalCard.isPresent()) {
             return ResponseEntity.notFound().build();
         } else {
-            Card card = optionalCard.get();
-            TravelNotification travelNotification = request.toTravel(card, ipClient, userAgent);
-            card.addTravelNotification(travelNotification);
-            repository.save(card);
-            return ResponseEntity.ok().build();
+            try {
+                cardClient.sentNotification(card.getCardNumber(), request);
+                TravelNotification travelNotification = request.toTravel(card, ipClient, userAgent);
+                card.addTravelNotification(travelNotification);
+                repository.save(card);
+                return ResponseEntity.ok().build();
+            } catch (FeignException e) {
+                e.printStackTrace();
+                return ResponseEntity.unprocessableEntity().build();
+            }
         }
-
     }
 }
 

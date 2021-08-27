@@ -2,6 +2,7 @@ package br.com.zup.proposal.card;
 
 import br.com.zup.proposal.card.block.Block;
 import br.com.zup.proposal.card.block.BlockRequest;
+import br.com.zup.proposal.card.notification.TravelNotificationRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,4 +18,8 @@ public interface CardClient {
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/cartoes/{id}/bloqueios", consumes = "application/json")
     void blockCard(@PathVariable("id") String id, @RequestBody BlockRequest blockRequest);
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/cartoes/{id}/avisos", consumes = "application/json")
+    void sentNotification(@PathVariable("id") String id, @RequestBody TravelNotificationRequest travelNotificationRequest);
+
 }
