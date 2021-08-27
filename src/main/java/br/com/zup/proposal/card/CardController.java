@@ -4,6 +4,8 @@ import br.com.zup.proposal.card.biometry.Biometry;
 import br.com.zup.proposal.card.biometry.BiometryRequest;
 import br.com.zup.proposal.card.block.Block;
 import br.com.zup.proposal.card.block.BlockRequest;
+import br.com.zup.proposal.card.notification.TravelNotification;
+import br.com.zup.proposal.card.notification.TravelNotificationRequest;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -86,6 +88,26 @@ public class CardController {
             }
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/{cardId}/notification")
+    @Transactional
+    public ResponseEntity<?> travelNotice(@PathVariable Long cardId, @RequestBody @Valid TravelNotificationRequest request, HttpServletRequest httpServletRequest) {
+
+        String userAgent = httpServletRequest.getHeader("User-Agent");
+        String ipClient = httpServletRequest.getRemoteAddr();
+
+        Optional<Card> optionalCard = repository.findById(cardId);
+        if (!optionalCard.isPresent()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            Card card = optionalCard.get();
+            TravelNotification travelNotification = request.toTravel(card, ipClient, userAgent);
+            card.addTravelNotification(travelNotification);
+            repository.save(card);
+            return ResponseEntity.ok().build();
+        }
+
     }
 }
 

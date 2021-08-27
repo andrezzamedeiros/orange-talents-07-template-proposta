@@ -2,6 +2,7 @@ package br.com.zup.proposal.card;
 
 import br.com.zup.proposal.card.biometry.Biometry;
 import br.com.zup.proposal.card.block.Block;
+import br.com.zup.proposal.card.notification.TravelNotification;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -24,6 +25,9 @@ public class Card {
 
     @OneToOne
     private Block block;
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
+    private List<TravelNotification> travelNotifications = new ArrayList<>();
 
     @Deprecated
     public Card() {
@@ -64,6 +68,11 @@ public class Card {
 
     public void setStatus(CardStatus status) {
         this.status = status;
+    }
+
+    public void addTravelNotification(TravelNotification travelNotification) {
+        travelNotification.setCard(this);
+        travelNotifications.add(travelNotification);
     }
 }
 
