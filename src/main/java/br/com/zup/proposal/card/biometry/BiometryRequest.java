@@ -1,4 +1,4 @@
-package br.com.zup.proposal.proposal.card.biometry;
+package br.com.zup.proposal.card.biometry;
 
 import br.com.zup.proposal.config.validators.UniqueValue;
 import com.fasterxml.jackson.annotation.JsonCreator;

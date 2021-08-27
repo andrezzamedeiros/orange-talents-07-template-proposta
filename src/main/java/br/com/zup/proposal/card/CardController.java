@@ -1,8 +1,10 @@
-package br.com.zup.proposal.proposal.card;
+package br.com.zup.proposal.card;
 
-import br.com.zup.proposal.proposal.card.biometry.Biometry;
-import br.com.zup.proposal.proposal.card.biometry.BiometryRequest;
-import br.com.zup.proposal.proposal.card.block.Block;
+import br.com.zup.proposal.card.biometry.Biometry;
+import br.com.zup.proposal.card.biometry.BiometryRequest;
+import br.com.zup.proposal.card.block.Block;
+import br.com.zup.proposal.card.block.BlockRequest;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,8 @@ public class CardController {
     private final CardRepository repository;
     @PersistenceContext
     EntityManager manager;
+    @Autowired
+    CardClient cardClient;
 
     public CardController(CardRepository repository) {
         this.repository = repository;
@@ -34,7 +38,7 @@ public class CardController {
     @PostMapping("/{cardId}")
     @Transactional
     public ResponseEntity<?> postBiometries(
-            @PathVariable String cardId,
+            @PathVariable Long cardId,
             @RequestBody @Valid BiometryRequest biometryRequest,
             UriComponentsBuilder builder) {
 
@@ -57,26 +61,33 @@ public class CardController {
 
     @PostMapping("/{cardId}/bloqueio")
     @Transactional
-    public ResponseEntity<?> blockCard(@PathVariable @NotNull String cardId, HttpServletRequest request) {
+    public ResponseEntity<?> blockCard(@PathVariable Long cardId, HttpServletRequest request) {
         String userAgent = request.getHeader("User-Agent");
         String ipClient = request.getRemoteAddr();
 
         Optional<Card> optionalCard = repository.findById(cardId);
         Card card = optionalCard.get();
         if (optionalCard.isPresent()) {
-            if (card.getStatus()!= null && card.getStatus().equals(CardStatus.BLOCKED)) {
-                return ResponseEntity.unprocessableEntity().build();
+            try {
+                cardClient.blockCard(card.getCardNumber(), new BlockRequest("propostas"));
+                Block block = new Block(ipClient, userAgent);
+                manager.persist(block);
+                card.setBlock(block);
+                card.setStatus(CardStatus.BLOCKED);
+                repository.save(card);
+                return ResponseEntity.ok().build();
+            } catch (FeignException e) {
+                if (e.status() == 400) {
+                    return ResponseEntity.badRequest().build();
+                }
+                if (e.status() == 422) {
+                    return ResponseEntity.unprocessableEntity().build();
+                }
             }
-            Block block = new Block(ipClient, userAgent);
-            manager.persist(block);
-            card.setBlock(block);
-            card.setStatus(CardStatus.BLOCKED);
-            repository.save(card);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
     }
 }
+
 
 

@@ -1,4 +1,4 @@
-package br.com.zup.proposal.proposal.card;
+package br.com.zup.proposal.card;
 
 import br.com.zup.proposal.proposal.Proposal;
 import br.com.zup.proposal.proposal.ProposalRepository;

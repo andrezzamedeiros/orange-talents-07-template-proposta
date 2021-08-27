@@ -1,4 +1,4 @@
-package br.com.zup.proposal.proposal.card;
+package br.com.zup.proposal.card;
 
 import javax.validation.constraints.NotBlank;
 

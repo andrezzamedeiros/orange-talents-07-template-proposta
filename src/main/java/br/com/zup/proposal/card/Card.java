@@ -1,7 +1,7 @@
-package br.com.zup.proposal.proposal.card;
+package br.com.zup.proposal.card;
 
-import br.com.zup.proposal.proposal.card.biometry.Biometry;
-import br.com.zup.proposal.proposal.card.block.Block;
+import br.com.zup.proposal.card.biometry.Biometry;
+import br.com.zup.proposal.card.block.Block;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -13,13 +13,15 @@ public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
+
+    private String cardNumber;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
     private List<Biometry> biometries = new ArrayList<>();
 
     private CardStatus status;
-    
+
     @OneToOne
     private Block block;
 
@@ -27,12 +29,12 @@ public class Card {
     public Card() {
     }
 
-    public Card(String id) {
-        this.id = id;
+    public Card(String cardNumber) {
+        this.cardNumber = cardNumber;
         this.status = CardStatus.ACTIVE;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -44,6 +46,9 @@ public class Card {
         return block;
     }
 
+    public String getCardNumber() {
+        return cardNumber;
+    }
 
     public void addBiometry(Biometry biometry) {
         biometry.setCard(this);

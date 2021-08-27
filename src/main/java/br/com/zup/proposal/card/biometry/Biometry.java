@@ -1,6 +1,6 @@
-package br.com.zup.proposal.proposal.card.biometry;
+package br.com.zup.proposal.card.biometry;
 
-import br.com.zup.proposal.proposal.card.Card;
+import br.com.zup.proposal.card.Card;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

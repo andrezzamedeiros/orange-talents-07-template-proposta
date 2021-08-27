@@ -1,6 +1,5 @@
-package br.com.zup.proposal.proposal.card;
+package br.com.zup.proposal.card;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class VencimentoResponse {

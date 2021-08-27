@@ -1,13 +1,12 @@
 package br.com.zup.proposal.proposal;
 
-import br.com.zup.proposal.proposal.card.Card;
+import br.com.zup.proposal.card.Card;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
-import java.util.Locale;
 
 @Entity
 public class Proposal {

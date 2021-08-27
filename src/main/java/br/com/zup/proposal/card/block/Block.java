@@ -1,8 +1,4 @@
-package br.com.zup.proposal.proposal.card.block;
-
-import br.com.zup.proposal.proposal.card.Card;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+package br.com.zup.proposal.card.block;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

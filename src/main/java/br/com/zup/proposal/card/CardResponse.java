@@ -1,4 +1,4 @@
-package br.com.zup.proposal.proposal.card;
+package br.com.zup.proposal.card;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
