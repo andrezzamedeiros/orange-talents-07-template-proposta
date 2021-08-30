@@ -1,5 +1,6 @@
 package br.com.zup.proposal.card;
 
+import antlr.debug.Tracer;
 import br.com.zup.proposal.card.biometry.Biometry;
 import br.com.zup.proposal.card.biometry.BiometryRequest;
 import br.com.zup.proposal.card.block.Block;
@@ -20,7 +21,6 @@ import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.Optional;
 
@@ -35,8 +35,11 @@ public class CardController {
     @Autowired
     CardClient cardClient;
 
-    public CardController(CardRepository repository) {
+    private final Tracer tracer;
+
+    public CardController(CardRepository repository, Tracer tracer) {
         this.repository = repository;
+        this.tracer = tracer;
     }
 
     @PostMapping("/{cardId}")
