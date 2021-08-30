@@ -4,6 +4,7 @@ import br.com.zup.proposal.card.biometry.Biometry;
 import br.com.zup.proposal.card.block.Block;
 import br.com.zup.proposal.card.notification.TravelNotification;
 import br.com.zup.proposal.card.wallet.DigitalWallet;
+import br.com.zup.proposal.card.wallet.TypeWallet;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -83,5 +84,11 @@ public class Card {
         digitalWallet.setCard(this);
         digitalWallets.add(digitalWallet);
     }
+
+    public boolean haveWallet(String type){
+        return this.digitalWallets.stream().anyMatch(wallet -> wallet.returnWallet(Enum.valueOf(TypeWallet.class,type)));
+    }
+
+
 }
 

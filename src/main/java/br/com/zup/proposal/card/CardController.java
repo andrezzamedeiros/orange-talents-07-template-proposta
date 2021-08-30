@@ -123,6 +123,7 @@ public class CardController {
         Optional<Card> optionalCard = repository.findById(cardId);
         if (optionalCard.isPresent()) {
             Card card = optionalCard.get();
+            if(!card.haveWallet(request.getWallet())) {
                 try {
                     cardClient.wallets(card.getCardNumber(), request);
                     DigitalWallet digitalWallet = request.toDigitalWallet(card);
@@ -134,6 +135,8 @@ public class CardController {
                     e.printStackTrace();
                     return ResponseEntity.unprocessableEntity().build();
                 }
+            }
+            return ResponseEntity.unprocessableEntity().body("Cartão já associado a carteira " + request.getWallet());
         }
         return ResponseEntity.notFound().build();
     }
