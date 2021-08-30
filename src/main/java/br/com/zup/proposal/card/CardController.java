@@ -35,11 +35,8 @@ public class CardController {
     @Autowired
     CardClient cardClient;
 
-    private final Tracer tracer;
-
-    public CardController(CardRepository repository, Tracer tracer) {
+    public CardController(CardRepository repository) {
         this.repository = repository;
-        this.tracer = tracer;
     }
 
     @PostMapping("/{cardId}")
