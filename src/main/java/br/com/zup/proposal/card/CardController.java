@@ -6,6 +6,8 @@ import br.com.zup.proposal.card.block.Block;
 import br.com.zup.proposal.card.block.BlockRequest;
 import br.com.zup.proposal.card.notification.TravelNotification;
 import br.com.zup.proposal.card.notification.TravelNotificationRequest;
+import br.com.zup.proposal.card.wallet.DigitalWallet;
+import br.com.zup.proposal.card.wallet.DigitalWalletRequest;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -114,7 +116,29 @@ public class CardController {
             }
         }
     }
+
+    @PostMapping("/{cardId}/wallet")
+    @Transactional
+    public ResponseEntity<?> associateDigitalWallet(@PathVariable Long cardId, @RequestBody @Valid DigitalWalletRequest request, UriComponentsBuilder builder) {
+        Optional<Card> optionalCard = repository.findById(cardId);
+        if (optionalCard.isPresent()) {
+            Card card = optionalCard.get();
+                try {
+                    cardClient.wallets(card.getCardNumber(), request);
+                    DigitalWallet digitalWallet = request.toDigitalWallet(card);
+                    card.addDigitalWallet(digitalWallet);
+                    repository.save(card);
+                    URI uri = builder.path("/{id}").build(digitalWallet.getId());
+                    return ResponseEntity.created(uri).build();
+                } catch (FeignException e) {
+                    e.printStackTrace();
+                    return ResponseEntity.unprocessableEntity().build();
+                }
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
+
 
 
 

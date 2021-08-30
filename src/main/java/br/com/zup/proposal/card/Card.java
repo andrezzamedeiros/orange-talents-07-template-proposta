@@ -3,6 +3,7 @@ package br.com.zup.proposal.card;
 import br.com.zup.proposal.card.biometry.Biometry;
 import br.com.zup.proposal.card.block.Block;
 import br.com.zup.proposal.card.notification.TravelNotification;
+import br.com.zup.proposal.card.wallet.DigitalWallet;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -20,6 +21,9 @@ public class Card {
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
     private List<Biometry> biometries = new ArrayList<>();
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
+    private List<DigitalWallet> digitalWallets = new ArrayList<>();
 
     private CardStatus status;
 
@@ -73,6 +77,11 @@ public class Card {
     public void addTravelNotification(TravelNotification travelNotification) {
         travelNotification.setCard(this);
         travelNotifications.add(travelNotification);
+    }
+
+    public void addDigitalWallet(DigitalWallet digitalWallet) {
+        digitalWallet.setCard(this);
+        digitalWallets.add(digitalWallet);
     }
 }
 
